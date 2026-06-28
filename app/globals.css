@@ -1,0 +1,84 @@
+@import "tailwindcss";
+/* Pretendard(본문/UI)는 app/layout.tsx에서 <link>로 로드 */
+
+/* ===== ADP 디자인 토큰 (빌드명세 §4) ===== */
+@theme {
+  /* 팔레트 (6색 + 보조) */
+  --color-paper: #f8f6f1; /* 배경(따뜻한 종이빛) */
+  --color-ink: #1e2540; /* 기본 텍스트 / 딥 브랜드 */
+  --color-royal: #34508c; /* 주요 액션/링크 */
+  --color-amber: #c68a3e; /* 악센트 — 현재 단계·진행·승급만 */
+  --color-sage: #4f8a6b; /* 완료/긍정 */
+  --color-line: #e6e1d6; /* 보더 */
+  --color-mist: #6c7080; /* 보조 텍스트 */
+
+  /* 연한 배경 변형 (칩/배지용, 토큰 색에서 파생) */
+  --color-royal-soft: #eaeef6;
+  --color-amber-soft: #f6ecdc;
+  --color-sage-soft: #e6f0ea;
+
+  /* 타이포 — 역할 분리 */
+  --font-serif: var(--font-noto-serif-kr), "Noto Serif KR", serif;
+  --font-sans: "Pretendard", "Pretendard Variable", -apple-system,
+    BlinkMacSystemFont, system-ui, sans-serif;
+
+  /* 타입 스케일 32/24/20/16/14/12 */
+  --text-display: 2rem; /* 32 */
+  --text-title: 1.5rem; /* 24 */
+  --text-lg: 1.25rem; /* 20 */
+  --text-base: 1rem; /* 16 본문 */
+  --text-sm: 0.875rem; /* 14 */
+  --text-xs: 0.75rem; /* 12 */
+
+  /* 라운드 — 카드 12 / 인풋·버튼 8 */
+  --radius-card: 12px;
+  --radius-control: 8px;
+
+  /* 모바일 디바이스 프레임 폭 */
+  --width-device: 420px;
+}
+
+/* ===== 전역 스타일 ===== */
+html {
+  height: 100%;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* 제목/디스플레이·큰 숫자는 Noto Serif KR */
+.font-display {
+  font-family: var(--font-serif);
+}
+
+/* 통계·표 숫자: tabular-nums */
+.nums {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* 키보드 포커스 가시 */
+:focus-visible {
+  outline: 2px solid var(--color-royal);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* prefers-reduced-motion 존중 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
