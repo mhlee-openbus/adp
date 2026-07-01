@@ -69,10 +69,11 @@ interface StoreValue extends AppData {
     stage: EduStage;
     title: string;
     source: import("./types").VideoSource;
+    url?: string;
   }) => void;
   updateLesson: (
     lessonId: string,
-    patch: Partial<Pick<import("./types").Lesson, "title" | "source">>,
+    patch: Partial<Pick<import("./types").Lesson, "title" | "source" | "url">>,
   ) => void;
   deleteLesson: (lessonId: string) => void;
   moveLesson: (lessonId: string, dir: -1 | 1) => void;
@@ -97,6 +98,13 @@ interface StoreValue extends AppData {
 
   // 미션
   toggleMission: (missionId: string) => void;
+  toggleGuideMission: (missionId: string) => void;
+
+  // 질문 게시판
+  addQuestion: (input: { title: string; body: string }) => string | null;
+  addQuestionReply: (questionId: string, text: string) => void;
+  myQuestions: (userId: string) => import("./types").Question[];
+  questionsInScope: (user: User) => import("./types").Question[];
 
   // 권한 범위 / 셀렉터
   visibleChurchIds: (user: User) => string[];
@@ -139,7 +147,8 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
           data: AppData;
           session: SessionState;
         };
-        if (parsed.data) setData(parsed.data);
+        // 시드 기본값 위에 저장값을 얹어, 신규 필드가 없던 예전 저장본도 안전하게 복원
+        if (parsed.data) setData({ ...makeSeed(), ...parsed.data });
         if (parsed.session) setSession(parsed.session);
       }
     } catch {
@@ -369,6 +378,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       stage: EduStage;
       title: string;
       source: import("./types").VideoSource;
+      url?: string;
     }) => {
       setData((d) => {
         const maxOrder = d.lessons
@@ -385,7 +395,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
               order: maxOrder + 1,
               title: input.title,
               source: input.source,
-              url: "#",
+              url: input.url?.trim() || "#",
             },
           ],
         };
@@ -561,6 +571,86 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     }));
   }, []);
 
+  const toggleGuideMission = useCallback((missionId: string) => {
+    setData((d) => ({
+      ...d,
+      guideMissions: d.guideMissions.map((m) =>
+        m.id === missionId ? { ...m, done: !m.done } : m,
+      ),
+    }));
+  }, []);
+
+  // ===== 질문 게시판 =====
+  const todayISO = () => new Date().toISOString().slice(0, 10);
+
+  const addQuestion = useCallback(
+    (input: { title: string; body: string }): string | null => {
+      const me = session.currentUserId
+        ? data.users.find((u) => u.id === session.currentUserId)
+        : null;
+      if (!me) return null;
+      const id = genId("q");
+      const q: import("./types").Question = {
+        id,
+        churchId: me.churchId,
+        authorId: me.id,
+        title: input.title,
+        body: input.body,
+        createdAt: todayISO(),
+        replies: [],
+      };
+      setData((d) => ({ ...d, questions: [...(d.questions ?? []), q] }));
+      return id;
+    },
+    [data.users, session.currentUserId],
+  );
+
+  const addQuestionReply = useCallback(
+    (questionId: string, text: string) => {
+      const me = session.currentUserId
+        ? data.users.find((u) => u.id === session.currentUserId)
+        : null;
+      if (!me) return;
+      // 관리자 권한 또는 목회자면 admin(답변), 아니면 member(작성자 추가 문답)
+      const role: "member" | "admin" =
+        me.adminLevel || me.accountType === "pastor" ? "admin" : "member";
+      const reply: import("./types").QnaReply = {
+        id: genId("qr"),
+        authorId: me.id,
+        role,
+        text,
+        createdAt: todayISO(),
+      };
+      setData((d) => ({
+        ...d,
+        questions: d.questions.map((q) =>
+          q.id === questionId ? { ...q, replies: [...q.replies, reply] } : q,
+        ),
+      }));
+    },
+    [data.users, session.currentUserId],
+  );
+
+  const myQuestions = useCallback(
+    (userId: string) =>
+      data.questions
+        .filter((q) => q.authorId === userId)
+        .slice()
+        .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1)),
+    [data.questions],
+  );
+
+  const questionsInScope = useCallback(
+    (user: User) => {
+      const ids = visibleChurchIds(user);
+      return data.questions
+        .filter((q) => ids.includes(q.churchId))
+        .slice()
+        .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
+    },
+    [data.questions, visibleChurchIds],
+  );
+
   const currentUser = useMemo(
     () =>
       session.currentUserId
@@ -596,6 +686,11 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     setBibleGuide,
     setAdminLevel,
     toggleMission,
+    toggleGuideMission,
+    addQuestion,
+    addQuestionReply,
+    myQuestions,
+    questionsInScope,
     visibleChurchIds,
     seekersInScope,
     membersInScope,

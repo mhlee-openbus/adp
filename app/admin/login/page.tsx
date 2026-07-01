@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { Card } from "@/components/ui/Card";
+import { Logo } from "@/components/ui/Logo";
 import { useStore } from "@/lib/store";
 import { ORG_LEVEL_LABELS } from "@/lib/stages";
 
@@ -19,8 +20,9 @@ export default function AdminLoginPage() {
   return (
     <div className="flex min-h-dvh items-center justify-center p-6">
       <Card className="w-full max-w-md" pad={false}>
-        <div className="border-b border-line p-6 text-center">
-          <p className="text-amber text-sm font-medium">ADP 관리자 페이지</p>
+        <div className="flex flex-col items-center border-b border-line p-6 text-center">
+          <Logo size={64} />
+          <p className="text-mist mt-4 text-sm font-medium">ADP 관리자 페이지</p>
           <h1 className="font-display mt-1 text-2xl font-bold">로그인</h1>
           <p className="mt-1 text-sm text-mist">
             권한 레벨에 따라 보는 범위가 달라집니다
@@ -45,7 +47,7 @@ export default function AdminLoginPage() {
             </button>
           ))}
           <p className="mt-2 text-xs text-mist">
-            프로토타입 · 비밀번호 없음. 권한 없는 회원은 접근이 차단됩니다.
+            권한 없는 회원은 접근이 차단됩니다.
           </p>
         </div>
       </Card>

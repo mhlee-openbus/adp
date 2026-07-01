@@ -26,6 +26,7 @@ export type SeekerStage = 1 | 2 | 3 | 4 | 5;
 
 // 교인 = 교육에 등록되어 단계를 가진 사용자
 export type JoinPath = "signup" | "manual";
+export type Gender = "male" | "female";
 export interface Member {
   id: string;
   userId: string;
@@ -33,6 +34,13 @@ export interface Member {
   eduStage: EduStage; // 시작 1, 자동/수동으로 변동
   joinPath: JoinPath;
   completedLessonIds: string[]; // 시청 완료한 강의
+  // 개인정보 (목 · 보기용)
+  phone?: string;
+  email?: string;
+  birthDate?: string; // YYYY-MM-DD
+  gender?: Gender;
+  address?: string;
+  registeredAt?: string; // 교육 등록일 YYYY-MM-DD
 }
 
 // 강의 패키지 = 교회별. 단계마다 순서 있는 강의 묶음.
@@ -74,6 +82,33 @@ export interface Mission {
   done: boolean;
 }
 
+// 바이블가이드 본인 미션 = 특정 관심자에 매이지 않은 개인 활동(전도 준비·모임 등)
+export interface GuideMission {
+  id: string;
+  guideId: string;
+  date: string;
+  text: string;
+  done: boolean;
+}
+
+// 1:1 질문 게시판 — 교인이 올리고 관리자가 답변. 스레드(추가 문답) 지원.
+export interface QnaReply {
+  id: string;
+  authorId: string; // userId
+  role: "member" | "admin";
+  text: string;
+  createdAt: string; // YYYY-MM-DD
+}
+export interface Question {
+  id: string;
+  churchId: string;
+  authorId: string; // 질문 올린 교인 userId
+  title: string;
+  body: string;
+  createdAt: string; // YYYY-MM-DD
+  replies: QnaReply[]; // 답변/추가 문답
+}
+
 // 전체 상태 스냅샷 (스토어 + localStorage 직렬화 단위)
 export interface AppData {
   orgs: Org[];
@@ -82,4 +117,6 @@ export interface AppData {
   lessons: Lesson[];
   seekers: Seeker[];
   missions: Mission[];
+  guideMissions: GuideMission[];
+  questions: Question[];
 }

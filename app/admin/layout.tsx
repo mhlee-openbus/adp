@@ -13,6 +13,7 @@ const NAV: NavItem[] = [
   { href: "/admin/members", label: "교인 관리" },
   { href: "/admin/seekers", label: "관심자 현황" },
   { href: "/admin/guides", label: "바이블가이드 관리" },
+  { href: "/admin/questions", label: "질문 관리" },
   { href: "/admin/access", label: "권한 / 조직 관리" },
 ];
 

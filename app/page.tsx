@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ResetButton } from "@/components/ResetButton";
+import { Logo } from "@/components/ui/Logo";
 
 // 런처(데모 진입): 3개 면으로 가는 인덱스. (목 로그인·모드 전환은 5단계에서 채움)
 const surfaces = [
@@ -26,8 +27,8 @@ const surfaces = [
 export default function LauncherPage() {
   return (
     <main className="mx-auto flex min-h-full max-w-2xl flex-col justify-center px-6 py-16">
-      <p className="text-amber text-sm font-medium">프로토타입 데모</p>
-      <h1 className="font-display mt-1 text-3xl font-bold">ADP 교육 플랫폼</h1>
+      <Logo size={88} />
+      <h1 className="font-display mt-5 text-3xl font-bold">ADP 교육 플랫폼</h1>
       <p className="text-mist mt-2">
         제칠일안식일예수재림교회 교인 교육 플랫폼. 아래에서 들어갈 면을
         고르세요.

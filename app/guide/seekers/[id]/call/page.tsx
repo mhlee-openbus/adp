@@ -79,9 +79,6 @@ export default function CallPage() {
         </div>
       </div>
 
-      <p className="pb-3 text-center text-[11px] text-paper/40">
-        실제 화상·재생·채팅은 외부 별도 서비스가 담당합니다 (프로토타입은 레이아웃만)
-      </p>
     </div>
   );
 }

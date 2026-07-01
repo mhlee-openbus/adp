@@ -174,9 +174,6 @@ export default function SeekerDetailPage() {
           >
             {seeker.converted ? "이미 교인으로 전환됨" : "교인으로 전환"}
           </Button>
-          <p className="text-center text-xs text-mist">
-            정식 규칙은 보존(5) 단계만 — 프로토타입은 전 단계에서 전환 가능
-          </p>
         </div>
 
         {/* 더보기: 전화·관계·기념일·메모 (접힘) */}

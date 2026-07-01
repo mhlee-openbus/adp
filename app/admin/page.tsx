@@ -65,7 +65,7 @@ export default function AdminDashboard() {
       <Card>
         <div className="mb-4 flex items-center justify-between">
           <h2 className="font-semibold">신규 유입 추이</h2>
-          <span className="text-xs text-mist">최근 6개월 · 목 데이터</span>
+          <span className="text-xs text-mist">최근 6개월</span>
         </div>
         <div className="flex h-40 items-end gap-3">
           {[3, 5, 4, 7, 6, 9].map((v, i) => (
@@ -114,7 +114,7 @@ function Distribution({
         <div className="flex flex-col gap-2.5">
           {rows.map((r) => (
             <div key={r.n} className="flex items-center gap-3">
-              <div className="w-24 shrink-0">
+              <div className="w-32 shrink-0">
                 <StageChip n={r.n} label={r.label} tone="default" />
               </div>
               <div className="h-2.5 flex-1 overflow-hidden rounded-full bg-paper">

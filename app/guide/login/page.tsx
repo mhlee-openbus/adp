@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useStore } from "@/lib/store";
+import { Logo } from "@/components/ui/Logo";
 
 // 2-1 로그인 (바이블가이드 앱). 목 로그인.
 export default function GuideLoginPage() {
@@ -16,14 +17,15 @@ export default function GuideLoginPage() {
 
   return (
     <div className="flex min-h-full flex-col px-6 py-10">
-      <div className="mb-8 text-center">
-        <p className="text-sage text-sm font-medium">전도 도구</p>
+      <div className="mb-8 flex flex-col items-center text-center">
+        <Logo size={76} />
+        <p className="text-sage mt-5 text-sm font-medium">전도 도구</p>
         <h1 className="font-display mt-1 text-3xl font-bold">바이블가이드</h1>
         <p className="text-mist mt-1 text-sm">오늘의 미션을 함께 합니다</p>
       </div>
 
       <p className="mb-3 text-xs text-mist">
-        계정을 선택해 로그인하세요 (프로토타입 · 비밀번호 없음).
+        계정을 선택해 로그인하세요.
       </p>
       <div className="flex flex-col gap-2">
         {guides.map((u) => (

@@ -8,6 +8,7 @@ import { Field, Input } from "@/components/ui/Field";
 import { useToast } from "@/components/ui/Toast";
 import { useStore } from "@/lib/store";
 import { eduName } from "@/lib/stages";
+import { Logo } from "@/components/ui/Logo";
 import type { AccountType } from "@/lib/types";
 
 // 1-1 회원가입 / 로그인 (ADP 앱). 목 로그인(비밀번호 검증 없음).
@@ -32,8 +33,9 @@ export default function AdpLoginPage() {
 
   return (
     <div className="flex min-h-full flex-col px-6 py-10">
-      <div className="mb-8 text-center">
-        <p className="text-amber text-sm font-medium">제칠일안식일예수재림교회</p>
+      <div className="mb-8 flex flex-col items-center text-center">
+        <Logo size={76} />
+        <p className="text-mist mt-5 text-sm font-medium">제칠일안식일예수재림교회</p>
         <h1 className="font-display mt-1 text-3xl font-bold">ADP</h1>
         <p className="text-mist mt-1 text-sm">교인 교육 플랫폼</p>
       </div>
@@ -80,7 +82,7 @@ export default function AdpLoginPage() {
           </div>
 
           <p className="text-xs text-mist">
-            계정을 선택해 로그인하세요 (프로토타입 · 비밀번호 없음).
+            계정을 선택해 로그인하세요.
           </p>
 
           <div className="flex flex-col gap-2">

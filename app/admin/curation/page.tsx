@@ -68,8 +68,8 @@ export default function CurationPage() {
             stage={stage}
             churchId={churchId}
             lessons={lessonsOf(churchId, stage)}
-            onAdd={(title, source) => {
-              addLesson({ churchId, stage, title, source });
+            onAdd={(title, source, url) => {
+              addLesson({ churchId, stage, title, source, url });
               toast("강의 추가됨");
             }}
             onUpdate={(id, patch) => {
@@ -100,16 +100,21 @@ function StageSection({
   stage: EduStage;
   churchId: string;
   lessons: ReturnType<ReturnType<typeof useStore>["lessonsOf"]>;
-  onAdd: (title: string, source: VideoSource) => void;
-  onUpdate: (id: string, patch: { title?: string; source?: VideoSource }) => void;
+  onAdd: (title: string, source: VideoSource, url: string) => void;
+  onUpdate: (
+    id: string,
+    patch: { title?: string; source?: VideoSource; url?: string },
+  ) => void;
   onDelete: (id: string) => void;
   onMove: (id: string, dir: -1 | 1) => void;
 }) {
   const [title, setTitle] = useState("");
   const [source, setSource] = useState<VideoSource>("youtube");
+  const [url, setUrl] = useState("");
   const [editingId, setEditingId] = useState<string | null>(null);
   const [draftTitle, setDraftTitle] = useState("");
   const [draftSource, setDraftSource] = useState<VideoSource>("youtube");
+  const [draftUrl, setDraftUrl] = useState("");
 
   return (
     <Card>
@@ -132,7 +137,7 @@ function StageSection({
           {lessons.map((l, i) => (
             <li
               key={l.id}
-              className="flex items-center gap-3 rounded-control border border-line px-3 py-2"
+              className="flex flex-wrap items-center gap-x-3 gap-y-2 rounded-control border border-line px-3 py-2"
             >
               <span className="nums w-5 text-sm text-mist">{l.order}</span>
               {editingId === l.id ? (
@@ -140,7 +145,8 @@ function StageSection({
                   <Input
                     value={draftTitle}
                     onChange={(e) => setDraftTitle(e.target.value)}
-                    className="h-9 flex-1"
+                    placeholder="강의 제목"
+                    className="h-9 min-w-40 flex-1"
                   />
                   <Select
                     value={draftSource}
@@ -155,10 +161,26 @@ function StageSection({
                       </option>
                     ))}
                   </Select>
+                  <Input
+                    value={draftUrl}
+                    onChange={(e) => setDraftUrl(e.target.value)}
+                    placeholder={
+                      draftSource === "upload"
+                        ? "파일 URL (선택)"
+                        : draftSource === "vimeo"
+                          ? "https://vimeo.com/..."
+                          : "https://youtu.be/..."
+                    }
+                    className="h-9 min-w-48 flex-1"
+                  />
                   <Button
                     size="sm"
                     onClick={() => {
-                      onUpdate(l.id, { title: draftTitle, source: draftSource });
+                      onUpdate(l.id, {
+                        title: draftTitle,
+                        source: draftSource,
+                        url: draftUrl.trim() || "#",
+                      });
                       setEditingId(null);
                     }}
                   >
@@ -174,7 +196,19 @@ function StageSection({
                 </>
               ) : (
                 <>
-                  <span className="flex-1 font-medium">{l.title}</span>
+                  <div className="min-w-40 flex-1">
+                    <p className="font-medium">{l.title}</p>
+                    {l.url && l.url !== "#" && (
+                      <a
+                        href={l.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="block truncate text-xs text-royal hover:underline"
+                      >
+                        {l.url}
+                      </a>
+                    )}
+                  </div>
                   <span className="rounded-full bg-paper px-2 py-0.5 text-xs text-mist">
                     {SOURCE_LABEL[l.source]}
                   </span>
@@ -199,6 +233,7 @@ function StageSection({
                         setEditingId(l.id);
                         setDraftTitle(l.title);
                         setDraftSource(l.source);
+                        setDraftUrl(l.url && l.url !== "#" ? l.url : "");
                       }}
                     >
                       ✎
@@ -233,13 +268,26 @@ function StageSection({
             </option>
           ))}
         </Select>
+        <Input
+          value={url}
+          onChange={(e) => setUrl(e.target.value)}
+          placeholder={
+            source === "upload"
+              ? "파일 URL (선택)"
+              : source === "vimeo"
+                ? "https://vimeo.com/..."
+                : "https://youtu.be/..."
+          }
+          className="h-9 min-w-48 flex-1"
+        />
         <Button
           size="sm"
           disabled={!title.trim() || !churchId}
           onClick={() => {
-            onAdd(title.trim(), source);
+            onAdd(title.trim(), source, url.trim());
             setTitle("");
             setSource("youtube");
+            setUrl("");
           }}
         >
           + 강의 추가

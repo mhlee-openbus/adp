@@ -30,14 +30,16 @@ export function MobileTopBar({
   left,
   right,
 }: {
-  title?: string;
+  title?: React.ReactNode;
   left?: React.ReactNode;
   right?: React.ReactNode;
 }) {
   return (
     <header className="sticky top-0 z-20 flex h-14 items-center justify-between border-b border-line bg-paper/95 px-4 backdrop-blur">
       <div className="flex w-12 items-center">{left}</div>
-      <h1 className="font-display truncate text-base font-semibold">{title}</h1>
+      <h1 className="font-display flex items-center gap-2 truncate text-base font-semibold">
+        {title}
+      </h1>
       <div className="flex w-12 items-center justify-end">{right}</div>
     </header>
   );

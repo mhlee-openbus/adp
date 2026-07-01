@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/cn";
+import { Logo } from "@/components/ui/Logo";
 
 export interface NavItem {
   href: string;
@@ -24,9 +25,12 @@ export function Sidebar({
   const pathname = usePathname();
   return (
     <aside className="flex w-60 shrink-0 flex-col border-r border-line bg-white">
-      <div className="border-b border-line px-5 py-5">
-        <p className="font-display text-lg font-bold text-ink">{title}</p>
-        {subtitle && <p className="mt-0.5 text-xs text-mist">{subtitle}</p>}
+      <div className="flex items-center gap-3 border-b border-line px-5 py-5">
+        <Logo size={40} className="shrink-0" />
+        <div className="min-w-0">
+          <p className="font-display text-lg font-bold text-ink">{title}</p>
+          {subtitle && <p className="mt-0.5 text-xs text-mist">{subtitle}</p>}
+        </div>
       </div>
       <nav className="flex-1 overflow-y-auto p-3">
         <ul className="flex flex-col gap-0.5">

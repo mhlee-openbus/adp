@@ -3,19 +3,19 @@
 
 /* ===== ADP 디자인 토큰 (빌드명세 §4) ===== */
 @theme {
-  /* 팔레트 (6색 + 보조) */
-  --color-paper: #f8f6f1; /* 배경(따뜻한 종이빛) */
-  --color-ink: #1e2540; /* 기본 텍스트 / 딥 브랜드 */
-  --color-royal: #34508c; /* 주요 액션/링크 */
-  --color-amber: #c68a3e; /* 악센트 — 현재 단계·진행·승급만 */
-  --color-sage: #4f8a6b; /* 완료/긍정 */
-  --color-line: #e6e1d6; /* 보더 */
-  --color-mist: #6c7080; /* 보조 텍스트 */
+  /* 팔레트 (6색 + 보조) — 재림교회 로고(블루 #1B4F8A) 기준 톤앤매너 */
+  --color-paper: #f7f6f2; /* 배경(따뜻한 종이빛) */
+  --color-ink: #16304f; /* 기본 텍스트 / 딥 브랜드(로고 계열 딥 네이비블루) */
+  --color-royal: #1b4f8a; /* 주요 액션/링크 — 로고 색 */
+  --color-amber: #c68a3e; /* 악센트 — 현재 단계·진행·승급만(블루의 보색 계열) */
+  --color-sage: #3f8a72; /* 완료/긍정 */
+  --color-line: #e4e0d6; /* 보더 */
+  --color-mist: #64707d; /* 보조 텍스트(블루 그레이) */
 
   /* 연한 배경 변형 (칩/배지용, 토큰 색에서 파생) */
-  --color-royal-soft: #eaeef6;
+  --color-royal-soft: #e7edf6;
   --color-amber-soft: #f6ecdc;
-  --color-sage-soft: #e6f0ea;
+  --color-sage-soft: #e2efea;
 
   /* 타이포 — 역할 분리 */
   --font-serif: var(--font-noto-serif-kr), "Noto Serif KR", serif;

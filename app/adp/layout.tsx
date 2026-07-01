@@ -4,15 +4,18 @@ import { useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { DeviceFrame, MobileTopBar } from "@/components/layout/DeviceFrame";
 import type { TabItem } from "@/components/ui/TabBar";
+import { Logo } from "@/components/ui/Logo";
 import { useStore } from "@/lib/store";
 
 // ① ADP 앱 — 모바일 프레임 + 하단 탭. 모드(교인/목회자)에 따라 탭이 다름.
 const MEMBER_TABS: TabItem[] = [
   { href: "/adp", label: "대시보드", icon: "🏠" },
   { href: "/adp/courses", label: "강의", icon: "📖" },
+  { href: "/adp/questions", label: "질문", icon: "💬" },
 ];
 const PASTOR_TABS: TabItem[] = [
   { href: "/adp/church", label: "우리교회", icon: "⛪" },
+  { href: "/adp/questions", label: "질문", icon: "💬" },
 ];
 
 export default function AdpLayout({ children }: { children: React.ReactNode }) {
@@ -37,7 +40,12 @@ export default function AdpLayout({ children }: { children: React.ReactNode }) {
       tabs={tabs}
       top={
         <MobileTopBar
-          title={title}
+          title={
+            <>
+              <Logo size={30} />
+              {title}
+            </>
+          }
           right={
             <button
               onClick={() => {

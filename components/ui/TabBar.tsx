@@ -17,11 +17,11 @@ export function TabBar({ items }: { items: TabItem[] }) {
     <nav className="sticky bottom-0 z-30 border-t border-line bg-white/95 backdrop-blur">
       <ul className="flex">
         {items.map((it) => {
+          // 루트 탭(/guide·/adp)은 정확히 일치할 때만, 하위 섹션 탭은 그 하위 경로까지 활성.
           const active =
-            it.href === pathname ||
-            (it.href !== "/" &&
-              it.href.split("/").length <= 3 &&
-              pathname.startsWith(it.href));
+            pathname === it.href ||
+            (it.href.split("/").length > 2 &&
+              pathname.startsWith(it.href + "/"));
           return (
             <li key={it.href} className="flex-1">
               <Link

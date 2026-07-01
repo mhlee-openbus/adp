@@ -11,11 +11,11 @@ export function ResetButton() {
     <button
       onClick={() => {
         reset();
-        toast("시드 데이터로 초기화됨");
+        toast("데이터가 초기화되었습니다");
       }}
       className="text-sm font-medium text-mist underline-offset-2 hover:text-ink hover:underline"
     >
-      데이터 초기화 (시드 복원)
+      데이터 초기화
     </button>
   );
 }

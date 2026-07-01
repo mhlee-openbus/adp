@@ -14,9 +14,10 @@ const notoSerifKr = Noto_Serif_KR({
 });
 
 export const metadata: Metadata = {
-  title: "ADP — 교인 교육 플랫폼 (프로토타입)",
+  title: "ADP — 교인 교육 플랫폼",
   description:
-    "제칠일안식일예수재림교회 교인 교육 플랫폼 프로토타입. ADP 앱 · 바이블가이드 앱 · 관리자 페이지.",
+    "제칠일안식일예수재림교회 교인 교육 플랫폼. ADP 앱 · 바이블가이드 앱 · 관리자 페이지.",
+  icons: { icon: "/logo.svg" },
 };
 
 export default function RootLayout({

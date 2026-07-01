@@ -4,12 +4,14 @@ import { useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { DeviceFrame, MobileTopBar } from "@/components/layout/DeviceFrame";
 import type { TabItem } from "@/components/ui/TabBar";
+import { Logo } from "@/components/ui/Logo";
 import { useStore } from "@/lib/store";
 
 // ② 바이블가이드 앱 — 모바일 프레임 + 하단 탭 (ADP와 별개 앱)
 const TABS: TabItem[] = [
   { href: "/guide", label: "오늘", icon: "📋" },
   { href: "/guide/seekers", label: "관심자", icon: "👥" },
+  { href: "/guide/missions", label: "미션", icon: "🎯" },
 ];
 
 export default function GuideLayout({
@@ -36,7 +38,12 @@ export default function GuideLayout({
       tabs={TABS}
       top={
         <MobileTopBar
-          title="바이블가이드"
+          title={
+            <>
+              <Logo size={30} />
+              바이블가이드
+            </>
+          }
           right={
             <button
               onClick={() => {

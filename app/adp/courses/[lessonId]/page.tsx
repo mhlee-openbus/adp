@@ -67,7 +67,7 @@ export default function WatchPage() {
             ▶
           </p>
           <p className="mt-1 text-xs text-paper/70">
-            {SOURCE_LABEL[lesson.source]} 영상 (프로토타입)
+            {SOURCE_LABEL[lesson.source]} 영상
           </p>
         </div>
       </div>
