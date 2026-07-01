@@ -53,9 +53,10 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* 제목/디스플레이·큰 숫자는 Noto Serif KR */
+/* 제목/디스플레이 — 모던한 산세리프(Pretendard). 살짝 타이트한 자간으로 또렷하게. */
 .font-display {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
+  letter-spacing: -0.015em;
 }
 
 /* 통계·표 숫자: tabular-nums */
