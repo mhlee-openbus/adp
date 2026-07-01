@@ -1,7 +1,6 @@
 "use client";
 
-import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { Card } from "@/components/ui/Card";
 import { ProgressBar } from "@/components/ui/ProgressBar";
 import { StagePath } from "@/components/ui/StagePath";
@@ -36,6 +35,7 @@ function InfoRow({ label, value }: { label: string; value?: string }) {
 // 우리교회 현황 > 교인 상세 (보기 전용)
 export default function ChurchMemberDetailPage() {
   const { memberId } = useParams<{ memberId: string }>();
+  const router = useRouter();
   const { currentUser, membersInScope, getUser, orgName, lessonsOf } =
     useStore();
   if (!currentUser) return null;
@@ -70,12 +70,12 @@ export default function ChurchMemberDetailPage() {
   return (
     <div className="flex flex-col gap-5 p-5">
       {/* 뒤로 */}
-      <Link
-        href="/adp/church"
-        className="text-sm text-mist hover:text-ink"
+      <button
+        onClick={() => router.back()}
+        className="self-start text-sm text-mist hover:text-ink"
       >
-        ‹ 우리교회 현황
-      </Link>
+        ‹ 뒤로
+      </button>
 
       {/* 헤더 */}
       <div>

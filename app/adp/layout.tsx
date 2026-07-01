@@ -15,6 +15,7 @@ const MEMBER_TABS: TabItem[] = [
 ];
 const PASTOR_TABS: TabItem[] = [
   { href: "/adp/church", label: "우리교회", icon: "⛪" },
+  { href: "/adp/members", label: "교인", icon: "👥" },
   { href: "/adp/questions", label: "질문", icon: "💬" },
 ];
 
